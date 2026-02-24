@@ -14,6 +14,32 @@ import org.springframework.web.bind.annotation.RestController;
 import com.csce548.model.User;
 import com.csce548.service.UserService;
 
+/**
+ * Service Layer for Food Delivery Application
+ *
+ * Hosting Context:
+ * This service is managed by the Spring Boot application and runs as part
+ * of the backend service hosted locally on the embedded Tomcat server.
+ *
+ * Platform:
+ * - Spring Boot (Java)
+ * - Hosted locally at: http://localhost:8080
+ *
+ * How the Service is Used:
+ * - Controller layer receives HTTP requests.
+ * - Controller calls methods in this Service class.
+ * - Service contains business logic and calls the DAO layer.
+ * - DAO layer performs CRUD operations on the MySQL database.
+ *
+ * Application Startup:
+ * To start the hosted service:
+ *   mvn spring-boot:run
+ *   OR run FoodDeliveryAppApplication.java
+ *
+ * This service is automatically available once the Spring Boot application
+ * is running.
+ *
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {

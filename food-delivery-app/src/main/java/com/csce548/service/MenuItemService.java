@@ -25,7 +25,7 @@ public class MenuItemService {
         dao.delete(id);
     }
 
-     public List<MenuItem> getAll() throws Exception {
+    public List<MenuItem> getAll() throws Exception {
         // You can extend DAO to have a getAll() if needed
         return dao.getAll();
     }
