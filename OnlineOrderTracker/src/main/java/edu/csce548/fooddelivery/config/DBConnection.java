@@ -1,3 +1,6 @@
+package edu.csce548.fooddelivery.config;
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -9,7 +12,7 @@ public class DBConnection {
         return DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/food_delivery_app",
             "root",
-            "your_password"
+            "GDriggers"
         );
     }
 }

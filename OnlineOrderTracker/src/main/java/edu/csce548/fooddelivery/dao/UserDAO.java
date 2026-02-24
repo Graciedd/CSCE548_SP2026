@@ -1,6 +1,9 @@
+package edu.csce548.fooddelivery.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import main.java.edu.csce548.fooddelivery.model.User;
 
 public class UserDAO {
 

@@ -1,3 +1,5 @@
+package edu.csce548.fooddelivery.model;
+
 public class User {
 
     private int userId;

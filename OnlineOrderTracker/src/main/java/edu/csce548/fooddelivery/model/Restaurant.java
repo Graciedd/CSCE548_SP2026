@@ -1,3 +1,4 @@
+package edu.csce548.fooddelivery.model;
 public class Restaurant {
 
     private int restaurantId;

@@ -51,3 +51,29 @@ SELECT COUNT(*) FROM users;
 SELECT COUNT(*) FROM restaurants;
 SELECT COUNT(*) FROM menu_items;
 SELECT COUNT(*) FROM orders;
+
+use food_delivery_app;
+SELECT * FROM orders;
+SELECT * FROM menu_items;
+
+use food_delivery_app;
+SELECT 
+    o.order_id,
+    u.user_id,
+    u.name AS user_name,
+    u.email AS user_email,
+    r.restaurant_id,
+    r.name AS restaurant_name,
+    m.menu_item_id,
+    m.name AS menu_item_name,
+    m.price AS menu_item_price,
+    o.status,
+    o.total_amount,
+    o.order_date
+FROM orders o
+JOIN users u ON o.user_id = u.user_id
+JOIN restaurants r ON o.restaurant_id = r.restaurant_id
+LEFT JOIN menu_items m ON r.restaurant_id = m.restaurant_id
+ORDER BY o.order_id, m.menu_item_id;
+
+

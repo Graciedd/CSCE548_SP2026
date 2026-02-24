@@ -1,6 +1,8 @@
 import java.math.BigDecimal;
 import java.util.List;
 
+import main.java.edu.csce548.fooddelivery.model.User;
+
 public class Main {
 
     private static final UserDAO userDAO = new UserDAO();

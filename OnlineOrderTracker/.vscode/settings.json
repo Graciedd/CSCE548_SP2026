@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": [
+        "src\\main\\java"
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\Users\\drigg\\OneDrive\\Desktop\\CSCE548_SP2026\\CSCE548_SP2026\\OnlineOrderTracker\\lib\\mysql-connector-j-9.6.0\\mysql-connector-j-9.6.0.jar"
+    ]
+}

@@ -1,3 +1,4 @@
+package edu.csce548.fooddelivery.model;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
