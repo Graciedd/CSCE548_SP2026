@@ -2,6 +2,7 @@ package com.csce548.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ import com.csce548.service.OrderService;
  */
 @RestController
 @RequestMapping("/orders")
+@CrossOrigin(origins = "*")
 public class OrderController {
 
     private OrderService service = new OrderService();
@@ -59,6 +61,11 @@ public class OrderController {
     public List<Order> getByUser(@PathVariable int id) throws Exception {
         return service.getByUser(id);
     }
+
+    @GetMapping("/{id}")
+    public Order getById(@PathVariable int id) throws Exception {
+        return service.getById(id);
+}
 
     @PutMapping("/{id}/status")
     public String updateStatus(@PathVariable int id, @RequestBody String status) throws Exception {

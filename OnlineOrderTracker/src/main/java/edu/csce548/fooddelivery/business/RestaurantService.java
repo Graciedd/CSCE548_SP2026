@@ -1,8 +1,9 @@
 package edu.csce548.fooddelivery.business;
-import fooddelivery.*;
-import dao.RestaurantDAO;
-import model.Restaurant;
+
 import java.util.List;
+
+import com.csce548.dao.RestaurantDAO;
+import com.csce548.model.Restaurant;
 
 public class RestaurantService {
 

@@ -1,8 +1,9 @@
 package edu.csce548.fooddelivery.business;
 
-import edu.csce548.fooddelivery.dao.OrderDAO;
-import edu.csce548.fooddelivery.model.Order;
 import java.util.List;
+
+import com.csce548.dao.OrderDAO;
+import com.csce548.model.Order;
 
 public class OrderService {
 

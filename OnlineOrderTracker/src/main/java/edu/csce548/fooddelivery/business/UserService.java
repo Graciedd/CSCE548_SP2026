@@ -1,8 +1,10 @@
 package edu.csce548.fooddelivery.business;
 
-import edu.csce548.fooddelivery.dao.UserDAO;
-import edu.csce548.fooddelivery.model.User;
+
 import java.util.List;
+
+import com.csce548.dao.UserDAO;
+import com.csce548.model.User;
 
 public class UserService {
 

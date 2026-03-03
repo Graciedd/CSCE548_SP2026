@@ -17,6 +17,10 @@ public class OrderService {
         return dao.getByUser(userId);
     }
 
+    public Order getById(int id) throws Exception {
+        return dao.getById(id); // assumes your DAO has a getById method
+}
+
     public void updateStatus(int orderId, String status) throws Exception {
         dao.updateStatus(orderId, status);
     }

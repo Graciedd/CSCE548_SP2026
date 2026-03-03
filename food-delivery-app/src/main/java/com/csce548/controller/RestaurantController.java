@@ -2,6 +2,7 @@ package com.csce548.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ import com.csce548.service.RestaurantService;
 
 @RestController
 @RequestMapping("/restaurants")
+@CrossOrigin(origins = "*")
 public class RestaurantController {
 
     private RestaurantService service = new RestaurantService();
@@ -59,6 +61,12 @@ public class RestaurantController {
     @GetMapping
     public List<Restaurant> getAll() throws Exception {
         return service.getAll();
+    }
+
+     // GET ONE BY ID
+    @GetMapping("/{id}")
+    public Restaurant getById(@PathVariable int id) throws Exception {
+        return service.getById(id);
     }
 
     @PutMapping("/{id}")

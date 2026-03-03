@@ -2,6 +2,7 @@ package com.csce548.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ import com.csce548.service.UserService;
  */
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private UserService service = new UserService();
@@ -60,6 +62,11 @@ public class UserController {
          // Endpoint: GET http://localhost:8080/users
         return service.getAllUsers();
     }
+
+   /*  @GetMapping("/{id}")
+    public User getById(@PathVariable int id) throws Exception {
+        return service.getUser(id);
+    } */
 
     @GetMapping("/{id}")
     public User get(@PathVariable int id) throws Exception {

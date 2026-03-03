@@ -73,6 +73,29 @@ public class OrderDAO {
     return orders;
 }
 
+    public Order getById(int id) throws Exception {
+        Order order = null;
+        String sql = "SELECT * FROM orders WHERE order_id=?";
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                order = new Order(
+                        rs.getInt("order_id"),
+                        rs.getInt("user_id"),
+                        rs.getInt("restaurant_id"),
+                        rs.getTimestamp("order_date"),
+                        rs.getString("status"),
+                        rs.getBigDecimal("total_amount")
+                );
+            }
+        }
+        return order;
+    }
+
     public void updateStatus(int orderId, String status) throws Exception {
         String sql = "UPDATE orders SET status=? WHERE order_id=?";
         try (Connection conn = DBConnection.getConnection();

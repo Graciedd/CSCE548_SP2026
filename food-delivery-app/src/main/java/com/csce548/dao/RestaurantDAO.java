@@ -43,6 +43,28 @@ public class RestaurantDAO {
         return restaurants;
     }
 
+    public Restaurant getById(int id) throws Exception {
+        String sql = "SELECT * FROM restaurants WHERE restaurant_id = ?";
+        Restaurant r = null;
+
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                r = new Restaurant();
+                r.setRestaurantId(rs.getInt("restaurant_id"));
+                r.setName(rs.getString("name"));
+                r.setAddress(rs.getString("address"));
+                r.setActive(rs.getBoolean("is_active"));
+            }
+        }
+
+        return r;
+    }
+
     public void update(Restaurant r) throws Exception {
         String sql = "UPDATE restaurants SET name=?, address=?, is_active=? WHERE restaurant_id=?";
         try (Connection conn = DBConnection.getConnection();

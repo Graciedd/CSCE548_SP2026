@@ -11,7 +11,7 @@ public class DBConnection {
         return DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/food_delivery_app",
                 "root",
-                "my_password"
+                "GDriggers"
         );
     }
 }

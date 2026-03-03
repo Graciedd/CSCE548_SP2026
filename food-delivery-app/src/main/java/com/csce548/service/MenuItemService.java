@@ -17,6 +17,10 @@ public class MenuItemService {
         return dao.getByRestaurant(restaurantId);
     }
 
+    public MenuItem getById(int id) throws Exception {
+    return dao.getById(id); // assumes your DAO has a getById method
+    }
+
     public void update(MenuItem item) throws Exception {
         dao.update(item);
     }

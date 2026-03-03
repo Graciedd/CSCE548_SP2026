@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Delivery Web Client</title>
+    <script src="script.js" defer></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        button {
+            margin: 5px 0;
+            padding: 6px 12px;
+        }
+
+        input {
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        pre {
+            background: #222;
+            color: #00ff90;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Food Delivery Web Client</h1>
+
+<!-- ============================= -->
+<!-- API CONFIGURATION -->
+<!-- ============================= -->
+
+<section>
+    <h2>API Configuration</h2>
+    <label>API Base URL:</label><br>
+    <input type="text" id="baseUrl" value="http://localhost:8080" size="40">
+    <button onclick="setBaseUrl()">Set Base URL</button>
+</section>
+
+<!-- ============================= -->
+<!-- USERS -->
+<!-- ============================= -->
+
+<section>
+    <h2>Users</h2>
+
+    <button onclick="getAllUsers()">Get All Users</button>
+    <br><br>
+
+    <label>User ID:</label><br>
+    <input type="number" id="userId">
+    <button onclick="getUserById()">Get User By ID</button>
+
+    <pre id="usersOutput"></pre>
+</section>
+
+<!-- ============================= -->
+<!-- RESTAURANTS -->
+<!-- ============================= -->
+
+<section>
+    <h2>Restaurants</h2>
+
+    <button onclick="getAllRestaurants()">Get All Restaurants</button>
+    <br><br>
+
+    <label>Restaurant ID:</label><br>
+    <input type="number" id="restaurantId">
+    <button onclick="getRestaurantById()">Get Restaurant By ID</button>
+
+    <pre id="restaurantsOutput"></pre>
+</section>
+
+<!-- ============================= -->
+<!-- MENU ITEMS -->
+<!-- ============================= -->
+
+<section>
+    <h2>Menu Items</h2>
+
+    <button onclick="getAllMenuItems()">Get All Menu Items</button>
+    <br><br>
+
+    <label>Restaurant ID:</label><br>
+    <input type="number" id="menuRestaurantId">
+    <button onclick="getMenuByRestaurant()">Get Menu By Restaurant</button>
+    <br><br>
+
+    <label>Menu Item ID:</label><br>
+    <input type="number" id="menuItemId">
+    <button onclick="getMenuItemById()">Get Menu Item By ID</button>
+
+    <pre id="menuOutput"></pre>
+</section>
+
+<!-- ============================= -->
+<!-- ORDERS -->
+<!-- ============================= -->
+
+<section>
+    <h2>Orders</h2>
+
+    <button onclick="getAllOrders()">Get All Orders</button>
+    <br><br>
+
+    <label>User ID:</label><br>
+    <input type="number" id="orderUserId">
+    <button onclick="getOrdersByUser()">Get Orders By User</button>
+    <br><br>
+
+    <label>Order ID:</label><br>
+    <input type="number" id="orderId">
+    <button onclick="getOrderById()">Get Order By ID</button>
+
+    <pre id="ordersOutput"></pre>
+</section>
+
+</body>
+</html>

@@ -64,6 +64,27 @@ public class MenuItemDAO {
         return items;
     }
 
+     public MenuItem getById(int id) throws Exception {
+        MenuItem item = null;
+        String sql = "SELECT * FROM menu_items WHERE menu_item_id=?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                item = new MenuItem(
+                        rs.getInt("menu_item_id"),
+                        rs.getInt("restaurant_id"),
+                        rs.getString("name"),
+                        rs.getBigDecimal("price")
+                );
+            }
+        }
+        return item;
+    }
+
     public void update(MenuItem item) throws Exception {
         String sql = "UPDATE menu_items SET name=?, price=? WHERE menu_item_id=?";
         try (Connection conn = DBConnection.getConnection();

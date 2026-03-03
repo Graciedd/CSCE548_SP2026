@@ -1,8 +1,10 @@
 package edu.csce548.fooddelivery.business;
 
-import edu.csce548.fooddelivery.dao.MenuItemDAO;
-import edu.csce548.fooddelivery.model.MenuItem;
+
 import java.util.List;
+
+import com.csce548.dao.MenuItemDAO;
+import com.csce548.model.MenuItem;
 
 public class MenuItemService {
 

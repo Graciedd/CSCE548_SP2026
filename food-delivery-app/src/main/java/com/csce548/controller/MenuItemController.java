@@ -2,6 +2,7 @@ package com.csce548.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,8 +41,10 @@ import com.csce548.service.MenuItemService;
  * is running.
  *
  */
+
 @RestController
 @RequestMapping("/menu")
+@CrossOrigin(origins = "*")
 public class MenuItemController {
 
     private MenuItemService service = new MenuItemService();
@@ -60,6 +63,17 @@ public class MenuItemController {
         return service.getByRestaurant(id);
     }
 
+    // GET ALL MENU ITEMS
+    @GetMapping
+    public List<MenuItem> getAll() throws Exception {
+        return service.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public MenuItem getById(@PathVariable int id) throws Exception {
+        return service.getById(id);
+}
+
     @PutMapping("/{id}")
     public String update(@PathVariable int id, @RequestBody MenuItem item) throws Exception {
         // Endpoint: PUT http://localhost:8080/menu/{id}
@@ -76,11 +90,5 @@ public class MenuItemController {
         service.delete(id);
         return "Menu item deleted";
     }
-
-    @GetMapping
-    public List<MenuItem> getAll() throws Exception {
-        // Endpoint: GET http://localhost:8080/menu
-        // Returns all menu items across all restaurants
-        return service.getAll();
-    }
+    
 }

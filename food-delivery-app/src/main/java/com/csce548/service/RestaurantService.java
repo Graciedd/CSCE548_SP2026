@@ -12,9 +12,14 @@ public class RestaurantService {
     public void create(Restaurant r) throws Exception {
         dao.create(r);
     }
+ 
 
     public List<Restaurant> getAll() throws Exception {
         return dao.getAll();
+    }
+
+     public Restaurant getById(int id) throws Exception {
+        return dao.getById(id);
     }
 
     public void update(Restaurant r) throws Exception {
