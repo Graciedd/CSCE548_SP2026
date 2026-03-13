@@ -1,140 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Food Delivery Web Client</title>
-    <script src="script.js" defer></script>
+<title>Food Delivery</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f4;
-        }
+<style>
 
-        h1 {
-            text-align: center;
-        }
+body{
+    font-family: Arial, sans-serif;
+    margin:0;
+    background:#f5f5f5;
+}
 
-        section {
-            background: white;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        }
+header{
+    background:#ff3008;
+    color:white;
+    padding:15px;
+    font-size:24px;
+}
 
-        button {
-            margin: 5px 0;
-            padding: 6px 12px;
-        }
+.container{
+    display:flex;
+}
 
-        input {
-            padding: 5px;
-            margin: 5px 0;
-        }
+.section{
+    padding:20px;
+}
 
-        pre {
-            background: #222;
-            color: #00ff90;
-            padding: 10px;
-            overflow-x: auto;
-        }
-    </style>
+.restaurants{
+    width:40%;
+}
+
+.menu{
+    width:35%;
+}
+
+.order{
+    width:25%;
+    background:white;
+    border-left:1px solid #ccc;
+}
+
+.card{
+    background:white;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:6px;
+    box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+
+button{
+    padding:8px 12px;
+    background:#ff3008;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#e02800;
+}
+
+.menu-item{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.admin{
+    margin-top:40px;
+    padding:20px;
+    background:white;
+}
+
+table{
+    border-collapse:collapse;
+    width:100%;
+    margin-top:10px;
+}
+
+th, td{
+    border:1px solid #ccc;
+    padding:6px;
+}
+
+th{
+    background:#eee;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>Food Delivery Web Client</h1>
+<header>
+Food Delivery App
+</header>
 
-<!-- ============================= -->
-<!-- API CONFIGURATION -->
-<!-- ============================= -->
+<div class="container">
 
-<section>
-    <h2>API Configuration</h2>
-    <label>API Base URL:</label><br>
-    <input type="text" id="baseUrl" value="http://localhost:8080" size="40">
-    <button onclick="setBaseUrl()">Set Base URL</button>
-</section>
+<div class="section restaurants">
+<h2>Restaurants</h2>
+<div id="restaurantsList"></div>
+</div>
 
-<!-- ============================= -->
-<!-- USERS -->
-<!-- ============================= -->
+<div class="section menu">
+<h2>Menu</h2>
+<div id="menuList"></div>
+</div>
 
-<section>
-    <h2>Users</h2>
+<div class="section order">
+<h2>Your Order</h2>
 
-    <button onclick="getAllUsers()">Get All Users</button>
-    <br><br>
+<div id="orderItems"></div>
 
-    <label>User ID:</label><br>
-    <input type="number" id="userId">
-    <button onclick="getUserById()">Get User By ID</button>
+<p><b>Total: $<span id="orderTotal">0.00</span></b></p>
 
-    <pre id="usersOutput"></pre>
-</section>
+<button onclick="placeOrder()">Place Order</button>
 
-<!-- ============================= -->
-<!-- RESTAURANTS -->
-<!-- ============================= -->
+</div>
 
-<section>
-    <h2>Restaurants</h2>
+</div>
 
-    <button onclick="getAllRestaurants()">Get All Restaurants</button>
-    <br><br>
 
-    <label>Restaurant ID:</label><br>
-    <input type="number" id="restaurantId">
-    <button onclick="getRestaurantById()">Get Restaurant By ID</button>
+<div class="admin">
 
-    <pre id="restaurantsOutput"></pre>
-</section>
+<h2>Admin / Testing Panel</h2>
 
-<!-- ============================= -->
-<!-- MENU ITEMS -->
-<!-- ============================= -->
+<h3>Users</h3>
+<button onclick="getAllUsers()">Get All Users</button>
+<input id="userIdInput" placeholder="User ID">
+<button onclick="getUserById()">Get User</button>
+<div id="usersOutput"></div>
 
-<section>
-    <h2>Menu Items</h2>
+<h3>Restaurants</h3>
+<button onclick="getAllRestaurants()">Get All Restaurants</button>
+<input id="restaurantIdInput" placeholder="Restaurant ID">
+<button onclick="getRestaurantById()">Get Restaurant</button>
+<div id="restaurantsOutput"></div>
 
-    <button onclick="getAllMenuItems()">Get All Menu Items</button>
-    <br><br>
+<h3>Menu Items</h3>
+<button onclick="getAllMenuItems()">Get All Menu Items</button>
+<input id="menuItemIdInput" placeholder="Menu Item ID">
+<button onclick="getMenuItemById()">Get Menu Item</button>
+<div id="menuOutput"></div>
 
-    <label>Restaurant ID:</label><br>
-    <input type="number" id="menuRestaurantId">
-    <button onclick="getMenuByRestaurant()">Get Menu By Restaurant</button>
-    <br><br>
+<h3>Orders</h3>
+<button onclick="getAllOrders()">Get All Orders</button>
+<input id="orderIdInput" placeholder="Order ID">
+<button onclick="getOrderById()">Get Order</button>
+<div id="ordersOutput"></div>
 
-    <label>Menu Item ID:</label><br>
-    <input type="number" id="menuItemId">
-    <button onclick="getMenuItemById()">Get Menu Item By ID</button>
+</div>
 
-    <pre id="menuOutput"></pre>
-</section>
-
-<!-- ============================= -->
-<!-- ORDERS -->
-<!-- ============================= -->
-
-<section>
-    <h2>Orders</h2>
-
-    <button onclick="getAllOrders()">Get All Orders</button>
-    <br><br>
-
-    <label>User ID:</label><br>
-    <input type="number" id="orderUserId">
-    <button onclick="getOrdersByUser()">Get Orders By User</button>
-    <br><br>
-
-    <label>Order ID:</label><br>
-    <input type="number" id="orderId">
-    <button onclick="getOrderById()">Get Order By ID</button>
-
-    <pre id="ordersOutput"></pre>
-</section>
+<script src="script.js"></script>
 
 </body>
 </html>

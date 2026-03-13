@@ -1,146 +1,212 @@
-// =============================
-// Food Delivery Web Client
-// =============================
-
-// Change this if your backend runs on another port
 let BASE_URL = "http://localhost:8080";
 
-// Allow user to change base URL from input field
-function setBaseUrl() {
-    BASE_URL = document.getElementById("baseUrl").value;
-    alert("Base URL set to: " + BASE_URL);
+let currentRestaurant = null;
+let orderItems = [];
+let total = 0;
+
+/* =========================
+   LOAD RESTAURANTS (UI)
+========================= */
+async function loadRestaurants() {
+    const response = await fetch(`${BASE_URL}/restaurants`);
+    const restaurants = await response.json();
+
+    const container = document.getElementById("restaurantsList");
+    container.innerHTML = "";
+
+    restaurants.forEach(r => {
+        container.innerHTML += `
+        <div class="card">
+            <h3>${r.name}</h3>
+            <p>${r.address}</p>
+            <button onclick="loadMenu(${r.restaurantId})">View Menu</button>
+        </div>
+        `;
+    });
 }
 
-// Utility function to display JSON nicely
-function displayResult(elementId, data) {
-    document.getElementById(elementId).textContent =
-        JSON.stringify(data, null, 2);
+/* =========================
+   LOAD MENU (UI)
+========================= */
+async function loadMenu(restaurantId) {
+    currentRestaurant = restaurantId;
+
+    const response = await fetch(`${BASE_URL}/menu/restaurant/${restaurantId}`);
+    const menu = await response.json();
+
+    const container = document.getElementById("menuList");
+    container.innerHTML = "";
+
+    menu.forEach(item => {
+        container.innerHTML += `
+        <div class="menu-item">
+            <span>${item.name} - $${item.price}</span>
+            <button onclick="addToOrder('${item.name}', ${item.price})">Add</button>
+        </div>
+        `;
+    });
 }
 
-// =============================
-// USERS
-// =============================
+/* =========================
+   ADD ITEM TO ORDER
+========================= */
+function addToOrder(name, price) {
+    orderItems.push({ name, price });
+    total += price;
+    updateOrder();
+}
 
-async function getAllUsers() {
-    try {
-        const response = await fetch(`${BASE_URL}/users`);
-        const data = await response.json();
-        displayResult("usersOutput", data);
-    } catch (error) {
-        displayResult("usersOutput", error);
+/* =========================
+   UPDATE ORDER CART
+========================= */
+function updateOrder() {
+    const container = document.getElementById("orderItems");
+    container.innerHTML = "";
+
+    orderItems.forEach(item => {
+        container.innerHTML += `<p>${item.name} - $${item.price}</p>`;
+    });
+
+    document.getElementById("orderTotal").innerText = total.toFixed(2);
+}
+
+/* =========================
+   PLACE ORDER
+========================= */
+async function placeOrder() {
+    if (orderItems.length === 0) {
+        alert("No items in order");
+        return;
     }
+
+    const order = {
+    userId: 1,
+    restaurantId: currentRestaurant,
+    status: "Pending",
+    totalAmount: Number(total.toFixed(2)) // <-- send as number
+    };
+
+    try {
+        const response = await fetch(`${BASE_URL}/orders`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert("Order failed: " + JSON.stringify(errorData));
+            return;
+        }
+
+        alert("Order placed!");
+        orderItems = [];
+        total = 0;
+        updateOrder();
+    } catch (err) {
+        console.error(err);
+        alert("Error placing order. See console for details.");
+    }
+}
+
+/* =========================
+   HELPER: DISPLAY TABLE
+========================= */
+function displayTable(containerId, data) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+
+    if (!data) {
+        container.innerHTML = "No data found.";
+        return;
+    }
+
+    if (!Array.isArray(data)) {
+        data = [data];
+    }
+
+    let table = "<table border='1' cellpadding='5' cellspacing='0'>";
+    table += "<tr>";
+    Object.keys(data[0]).forEach(key => { table += `<th>${key}</th>`; });
+    table += "</tr>";
+
+    data.forEach(obj => {
+        table += "<tr>";
+        Object.values(obj).forEach(value => {
+            table += `<td>${value}</td>`;
+        });
+        table += "</tr>";
+    });
+
+    table += "</table>";
+    container.innerHTML = table;
+}
+
+/* =========================
+   USERS
+========================= */
+async function getAllUsers() {
+    const response = await fetch(`${BASE_URL}/users`);
+    const data = await response.json();
+    displayTable("usersOutput", data);
 }
 
 async function getUserById() {
-    const id = document.getElementById("userId").value;
-
-    try {
-        const response = await fetch(`${BASE_URL}/users/${id}`);
-        const data = await response.json();
-        displayResult("usersOutput", data);
-    } catch (error) {
-        displayResult("usersOutput", error);
-    }
+    const id = document.getElementById("userIdInput").value;
+    const response = await fetch(`${BASE_URL}/users/${id}`);
+    const data = await response.json();
+    displayTable("usersOutput", data);
 }
 
-// =============================
-// RESTAURANTS
-// =============================
-
+/* =========================
+   RESTAURANTS
+========================= */
 async function getAllRestaurants() {
-    try {
-        const response = await fetch(`${BASE_URL}/restaurants`);
-        const data = await response.json();
-        displayResult("restaurantsOutput", data);
-    } catch (error) {
-        displayResult("restaurantsOutput", error);
-    }
+    const response = await fetch(`${BASE_URL}/restaurants`);
+    const data = await response.json();
+    displayTable("restaurantsOutput", data);
 }
 
 async function getRestaurantById() {
-    const id = document.getElementById("restaurantId").value;
-
-    try {
-        const response = await fetch(`${BASE_URL}/restaurants/${id}`);
-        const data = await response.json();
-        displayResult("restaurantsOutput", data);
-    } catch (error) {
-        displayResult("restaurantsOutput", error);
-    }
+    const id = document.getElementById("restaurantIdInput").value;
+    const response = await fetch(`${BASE_URL}/restaurants/${id}`);
+    const data = await response.json();
+    displayTable("restaurantsOutput", data);
 }
 
-// =============================
-// MENU ITEMS
-// =============================
-
+/* =========================
+   MENU ITEMS
+========================= */
 async function getAllMenuItems() {
-    try {
-        const response = await fetch(`${BASE_URL}/menu`);
-        const data = await response.json();
-        displayResult("menuOutput", data);
-    } catch (error) {
-        displayResult("menuOutput", error);
-    }
-}
-
-async function getMenuByRestaurant() {
-    const id = document.getElementById("menuRestaurantId").value;
-
-    try {
-        const response = await fetch(`${BASE_URL}/menu/restaurant/${id}`);
-        const data = await response.json();
-        displayResult("menuOutput", data);
-    } catch (error) {
-        displayResult("menuOutput", error);
-    }
+    const response = await fetch(`${BASE_URL}/menu`);
+    const data = await response.json();
+    displayTable("menuOutput", data);
 }
 
 async function getMenuItemById() {
-    const id = document.getElementById("menuItemId").value;
-
-    try {
-        const response = await fetch(`${BASE_URL}/menu/${id}`);
-        const data = await response.json();
-        displayResult("menuOutput", data);
-    } catch (error) {
-        displayResult("menuOutput", error);
-    }
+    const id = document.getElementById("menuItemIdInput").value;
+    const response = await fetch(`${BASE_URL}/menu/${id}`);
+    const data = await response.json();
+    displayTable("menuOutput", data);
 }
 
-// =============================
-// ORDERS
-// =============================
-
+/* =========================
+   ORDERS
+========================= */
 async function getAllOrders() {
-    try {
-        const response = await fetch(`${BASE_URL}/orders`);
-        const data = await response.json();
-        displayResult("ordersOutput", data);
-    } catch (error) {
-        displayResult("ordersOutput", error);
-    }
-}
-
-async function getOrdersByUser() {
-    const id = document.getElementById("orderUserId").value;
-
-    try {
-        const response = await fetch(`${BASE_URL}/orders/user/${id}`);
-        const data = await response.json();
-        displayResult("ordersOutput", data);
-    } catch (error) {
-        displayResult("ordersOutput", error);
-    }
+    const response = await fetch(`${BASE_URL}/orders`);
+    const data = await response.json();
+    displayTable("ordersOutput", data);
 }
 
 async function getOrderById() {
-    const id = document.getElementById("orderId").value;
-
-    try {
-        const response = await fetch(`${BASE_URL}/orders/${id}`);
-        const data = await response.json();
-        displayResult("ordersOutput", data);
-    } catch (error) {
-        displayResult("ordersOutput", error);
-    }
+    const id = document.getElementById("orderIdInput").value;
+    const response = await fetch(`${BASE_URL}/orders/${id}`);
+    const data = await response.json();
+    displayTable("ordersOutput", data);
 }
+
+/* =========================
+   INITIAL PAGE LOAD
+========================= */
+window.onload = loadRestaurants;
