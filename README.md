@@ -1,6 +1,5 @@
 # Food Delivery App
-  Web application that allows users to browse restaurants and menu items, and place orders. It also allows for CRUD of all of these items. Uses Java and Spring Boot for the backend, SQL for the database, and JavaScript and HTML for the frontend (client).
-
+  Web application that allows users to browse restaurants and menu items, and place orders. It also allows for CRUD of all of these items. Contains a model layer, a DAO layer, a business layer, and a service layer. Uses Java and Spring Boot for the backend, SQL for the database, and JavaScript and HTML for the frontend (client).
 # Requirements
 Before running the project, install:
 
