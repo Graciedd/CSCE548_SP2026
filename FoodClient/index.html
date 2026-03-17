@@ -54,6 +54,7 @@ button{
     color:white;
     border:none;
     cursor:pointer;
+    margin-top:5px;
 }
 
 button:hover{
@@ -70,6 +71,11 @@ button:hover{
     margin-top:40px;
     padding:20px;
     background:white;
+}
+
+input{
+    padding:6px;
+    margin:4px;
 }
 
 table{
@@ -97,6 +103,19 @@ th{
 Food Delivery App
 </header>
 
+<!-- CUSTOMER VIEW -->
+<div style="padding:15px;background:white;border-bottom:1px solid #ccc;">
+
+<b>Current User:</b>
+
+<select id="userSelect" onchange="changeUser()"></select>
+
+<span style="margin-left:10px;">
+Active User ID: <b id="currentUserDisplay">1</b>
+</span>
+
+</div>
+
 <div class="container">
 
 <div class="section restaurants">
@@ -110,6 +129,7 @@ Food Delivery App
 </div>
 
 <div class="section order">
+
 <h2>Your Order</h2>
 
 <div id="orderItems"></div>
@@ -123,32 +143,99 @@ Food Delivery App
 </div>
 
 
+
+<!-- ADMIN PANEL -->
+
 <div class="admin">
 
 <h2>Admin / Testing Panel</h2>
 
+
+<!-- USERS CRUD -->
+
 <h3>Users</h3>
-<button onclick="getAllUsers()">Get All Users</button>
+
 <input id="userIdInput" placeholder="User ID">
+<input id="userName" placeholder="Name">
+<input id="userEmail" placeholder="Email">
+<input id="userAddress" placeholder="Address">
+
+<br>
+
+<button onclick="createUser()">Create User</button>
+<button onclick="updateUser()">Update User</button>
+<button onclick="deleteUser()">Delete User</button>
+
+<br><br>
+
+<button onclick="getAllUsers()">Get All Users</button>
 <button onclick="getUserById()">Get User</button>
+<button onclick="getOrdersByUser()">User Orders</button>
+
 <div id="usersOutput"></div>
 
+
+
+<!-- RESTAURANT CRUD -->
+
 <h3>Restaurants</h3>
-<button onclick="getAllRestaurants()">Get All Restaurants</button>
+
 <input id="restaurantIdInput" placeholder="Restaurant ID">
+<input id="restaurantName" placeholder="Name">
+<input id="restaurantAddress" placeholder="Address">
+
+<br>
+
+<button onclick="createRestaurant()">Create Restaurant</button>
+<button onclick="updateRestaurant()">Update Restaurant</button>
+<button onclick="deleteRestaurant()">Delete Restaurant</button>
+
+<br><br>
+
+<button onclick="getAllRestaurants()">Get All Restaurants</button>
 <button onclick="getRestaurantById()">Get Restaurant</button>
+
 <div id="restaurantsOutput"></div>
 
+
+
+<!-- MENU ITEM CRUD -->
+
 <h3>Menu Items</h3>
-<button onclick="getAllMenuItems()">Get All Menu Items</button>
+
 <input id="menuItemIdInput" placeholder="Menu Item ID">
+<input id="menuRestaurantId" placeholder="Restaurant ID">
+<input id="menuName" placeholder="Menu Name">
+<input id="menuPrice" placeholder="Price">
+
+<br>
+
+<button onclick="createMenuItem()">Create Menu Item</button>
+<button onclick="updateMenuItem()">Update Menu Item</button>
+<button onclick="deleteMenuItem()">Delete Menu Item</button>
+
+<br><br>
+
+<button onclick="getAllMenuItems()">Get All Menu Items</button>
 <button onclick="getMenuItemById()">Get Menu Item</button>
+
 <div id="menuOutput"></div>
 
+
+
+<!-- ORDERS MANAGEMENT -->
+
 <h3>Orders</h3>
-<button onclick="getAllOrders()">Get All Orders</button>
+
 <input id="orderIdInput" placeholder="Order ID">
-<button onclick="getOrderById()">Get Order</button>
+<input id="orderStatus" placeholder="Status (Pending/Preparing/Delivered/Cancelled)">
+
+<br>
+
+<button onclick="getAllOrders()">Get All Orders</button>
+<button onclick="updateOrderStatus()">Update Order Status</button>
+<button onclick="deleteOrder()">Delete Order</button>
+
 <div id="ordersOutput"></div>
 
 </div>
